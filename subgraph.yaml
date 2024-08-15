@@ -1,0 +1,35 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Foo
+    network: fuse
+    source:
+      address: "0x74616164eB1892ceC5fa553D45b3e5D6dF7BC7b9"
+      abi: Foo
+      startBlock: 25322757
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - AutoLiquify
+        - OwnershipTransferred
+        - Transfer
+      abis:
+        - name: Foo
+          file: ./abis/Foo.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: AutoLiquify(uint256,uint256)
+          handler: handleAutoLiquify
+        - event: OwnershipTransferred(address)
+          handler: handleOwnershipTransferred
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/foo.ts
